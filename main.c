@@ -86,6 +86,8 @@ int main(int argc, char **argv, char **envp)
 	{
 
 		input = prompt(shell->env);
+		if (input == NULL)
+			continue;
 		if (ft_strnstr(input, "exit", 4))
 			ft_exit(input, shell);
 		ft_parsing(input, shell);

@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:31:47 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/17 21:33:56 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/18 00:01:58 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <stdbool.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 # define MAX_FD 1023
 # define MAX_HEREDOC 16
@@ -69,12 +69,12 @@ typedef struct s_input_context
 	int		rank;
 }	t_input_context;
 
-typedef struct s_shell_parsing
+typedef struct s_shell
 {
 	char **env;
 	t_token *token;
 	char **splitted;
-} t_shell_parsing;
+} t_shell;
 
 //booleans functions for split2
 bool	is_quote(char c);
@@ -84,11 +84,15 @@ bool	handle_quotes(char c, bool *in_quotes, char *opening_quote);
 //string_utils functions
 char	*ft_substrword(char *str, int start, int end);
 char	*trim_quotes(char *str);
-int		is_digit(char *str);
+char	**ft_strdup_array(char **src);
+
+
+//parsing utils
+int		ft_has_invalid_quotes(const char *str);
 
 //main lexer functions
 char	**ft_split2(char const *s, char c);
-void	tokenizer(char *str, t_token **token, int rank);
+void	tokenizer(t_shell *shell, int rank);
 void	refine_token_type(t_token *token);
 
 //[PLACEHOLDER] quote counter
@@ -96,11 +100,15 @@ void	refine_token_type(t_token *token);
 
 //linked_list_utils functions
 t_token	*create_token(char *str);
-int		add_token(t_token **token, char *str, t_token_type type, int rank);
+int		add_token(t_shell *shell, char *str, t_token_type type, int rank);
 
-int		ft_has_invalid_quotes(const char *str);
-char	**ft_strdup_array(char **src);
+//clean exit
+void	ft_free_str_array(char **arr);
+void	free_list(t_token **head);
+void	ft_exit(char *input, t_shell *shell);
+
+
+
 char 	*prompt(char **env);
-void	ft_free_str_array(char **str);
 
 #endif
