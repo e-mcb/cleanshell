@@ -109,7 +109,14 @@ int	ft_has_invalid_quotes(const char *str)
 	opening_quote = 0;
 	while (str[i])
 	{
-		if ((str[i] == '\'' || str[i] == '\"'))
+		if ((str[i] == '\'' || str[i] == '\"// void	case_question_mark(t_expand *ex, char *value)
+// {
+// 	value = ft_strdup("--code retour derniere commande--");//ici fonction à implémenter
+// 	ex->result[ex->j++] = value;
+// 	ex->i += 2;
+// 	ex->start = ex->i;
+// }
+'))
 		{
 			if (!in_quotes)
 			{

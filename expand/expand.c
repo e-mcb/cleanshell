@@ -2,7 +2,7 @@
 
 int main(void)
 {
-	char *input = "sach$4a le$4  user $USER $";
+	char *input = "Salut_$USER$SHLVL$USER";
 	char **parsed = split_and_expand(input);
 	char	*expended = join_chars(parsed);
 
@@ -16,3 +16,12 @@ int main(void)
 	free(expended);
 	return 0;
 }
+
+// char *expand (t_shell *shell)
+// {
+// 	t_token	tmp;
+
+
+// }
+
+// token->value = join_chars(split_and_expand(token->value))

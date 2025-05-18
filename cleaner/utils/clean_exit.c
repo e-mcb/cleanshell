@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 21:18:02 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/17 22:18:31 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/18 14:39:40 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_free_str_array(char **arr)
 	free(arr);
 }
 
-void ft_exit(char *input, t_shell *shell)
+void	ft_exit(char *input, t_shell *shell)
 {
 	if (input)
 		free(input);

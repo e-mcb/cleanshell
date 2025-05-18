@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 14:19:44 by mzutter           #+#    #+#             */
+/*   Updated: 2025/05/18 14:20:41 by mzutter          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expand.h"
 
 int	ft_isalnum(int c)
@@ -26,14 +38,16 @@ char	*ft_strncpy(char *dest, const char *src, unsigned int n)
 	return (dest);
 }
 
-char *strndup_custom(const char *s, size_t n)
+char	*strndup_custom(const char *s, size_t n)
 {
-	char *res = malloc(n + 1);
+	char	*res;
+
+	res = malloc(n + 1);
 	if (!res)
-        return NULL;
+		return (NULL);
 	ft_strncpy(res, s, n);
 	res[n] = '\0';
-	return res;
+	return (res);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -92,3 +106,4 @@ int	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
+

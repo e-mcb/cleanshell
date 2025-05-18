@@ -6,15 +6,15 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 17:12:13 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/17 23:10:31 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/18 14:40:10 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/lexer.h"
 
-static int is_str_digit(char *str)
+static int	is_str_digit(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -54,7 +54,6 @@ void	refine_token_type(t_token *token)
 {
 	t_token	*t;
 	t_token	*p;
-
 
 	t = token;
 	p = NULL;

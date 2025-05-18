@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:31:47 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 00:01:58 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/18 14:38:34 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 
 # define MAX_FD 1023
 # define MAX_HEREDOC 16
-# define OPEN_QUOTES "Minishell does not support open quotes, please escape them properly\n"
-
+# define OPEN_QUOTES "Minishell does not support open quotes,\
+						please escape them properly\n"
 
 typedef enum e_token_type
 {
@@ -71,10 +71,10 @@ typedef struct s_input_context
 
 typedef struct s_shell
 {
-	char **env;
-	t_token *token;
-	char **splitted;
-} t_shell;
+	char	**env;
+	t_token	*token;
+	char	**splitted;
+}	t_shell;
 
 //booleans functions for split2
 bool	is_quote(char c);
@@ -85,7 +85,6 @@ bool	handle_quotes(char c, bool *in_quotes, char *opening_quote);
 char	*ft_substrword(char *str, int start, int end);
 char	*trim_quotes(char *str);
 char	**ft_strdup_array(char **src);
-
 
 //parsing utils
 int		ft_has_invalid_quotes(const char *str);
@@ -107,8 +106,6 @@ void	ft_free_str_array(char **arr);
 void	free_list(t_token **head);
 void	ft_exit(char *input, t_shell *shell);
 
-
-
-char 	*prompt(char **env);
+char	*prompt(t_shell *shell);
 
 #endif

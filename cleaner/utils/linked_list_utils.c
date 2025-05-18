@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:43:06 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 00:01:28 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:57:06 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,6 @@ t_token	*create_token(char *str)
 	return (new_token);
 }
 
-// int	add_token(t_token **token, char *str, t_token_type type, int rank)
-// {
-// 	t_token	*new_token;
-// 	t_token	*current_token;
-
-// 	new_token = create_token(str);
-// 	if (!new_token)
-// 		return (0);
-// 	new_token->type = type;
-// 	new_token->rank = rank;
-// 	if (*token == NULL)
-// 	{
-// 		*token = new_token;
-// 		return (0);
-// 	}
-// 	current_token = *token;
-// 	while (current_token->next != NULL)
-// 		current_token = current_token->next;
-// 	current_token->next = new_token;
-// 	return (0);
-// }
-
 int	add_token(t_shell *shell, char *str, t_token_type type, int rank)
 {
 	t_token	*new_token;
@@ -59,7 +37,7 @@ int	add_token(t_shell *shell, char *str, t_token_type type, int rank)
 
 	new_token = create_token(str);
 	if (!new_token)
-		return (0);
+		return (1);
 	new_token->type = type;
 	new_token->rank = rank;
 	if (shell->token == NULL)
@@ -73,4 +51,3 @@ int	add_token(t_shell *shell, char *str, t_token_type type, int rank)
 	current_token->next = new_token;
 	return (0);
 }
-

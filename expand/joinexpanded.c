@@ -1,53 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   joinexpanded.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 21:55:23 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 14:39:29 by mzutter          ###   ########.fr       */
+/*   Created: 2025/05/18 14:27:36 by mzutter           #+#    #+#             */
+/*   Updated: 2025/05/18 14:28:51 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/lexer.h"
+#include "expand.h"
 
-int	ft_has_invalid_quotes(const char *str)
+int	array_len(char **str)
 {
-	int		i;
-	bool	in_quotes;
-	char	opening_quote;
+	int	i;
+	int	len;
 
 	i = 0;
-	in_quotes = false;
-	opening_quote = 0;
+	len = 0;
 	while (str[i])
 	{
-		if ((str[i] == '\'' || str[i] == '\"'))
+		len += ft_strlen(str[i]);
+		i++;
+	}
+	return (len);
+}
+
+char	*join_chars(char **str)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*expanded;
+
+	if (!str)
+		return (NULL);
+	expanded = malloc(sizeof(char) * (array_len(str) + 1));
+	if (!expanded)
+		return (NULL);
+	i = 0;
+	k = 0;
+	while (str[i])
+	{
+		j = 0;
+		while (str[i][j])
 		{
-			if (!in_quotes)
-			{
-				in_quotes = true;
-				opening_quote = str[i];
-			}
-			else if (str[i] == opening_quote)
-				in_quotes = false;
+			expanded[k] = str[i][j];
+			j++;
+			k++;
 		}
 		i++;
 	}
-	return (in_quotes);
-}
-
-int	is_str_digit(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-		i++;
-	}
-	return (1);
+	expanded[k] = '\0';
+	return (expanded);
 }
