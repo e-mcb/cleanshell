@@ -6,11 +6,11 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 14:20:51 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 18:17:25 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:12:06 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expand.h"
+#include "../headers/lexer.h"
 
 static void	init_ex(t_expand *ex)
 {
@@ -48,7 +48,7 @@ static void	process_dollar(const char *input, t_expand *ex)
 		ex->result[ex->j++] = strndup_custom(input + ex->start,
 				ex->i - ex->start);
 	if (input[ex->i + 1] == '$')
-		case_double_dollar(ex);
+		case_double_dollar();
 	else if (input[ex->i + 1] == ' '
 		|| input[ex->i + 1] == '\0')//WHITE SPACE ????
 		case_only_dollar(ex);

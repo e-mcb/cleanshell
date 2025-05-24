@@ -6,13 +6,13 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 14:35:14 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 14:36:09 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:07:10 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expand.h"
+#include "../headers/lexer.h"
 
-static void	process_single_quote(const char *input, t_expand *ex)
+static void	process_single_quote(t_expand *ex)
 {
 	if (ex->i > ex->start)
 		ex->count++;
@@ -21,7 +21,7 @@ static void	process_single_quote(const char *input, t_expand *ex)
 	ex->start = ex->i;
 }
 
-static void	process_double_quote(const char *input, t_expand *ex)
+static void	process_double_quote(t_expand *ex)
 {
 	if (ex->i > ex->start)
 		ex->count++;
@@ -55,9 +55,9 @@ int	ft_count_segments(const char *input)
 	while (input[ex.i])
 	{
 		if (input[ex.i] == '\'' && !ex.in_double_quote)
-			process_single_quote(input, &ex);
+			process_single_quote(&ex);
 		else if (input[ex.i] == '"' && !ex.in_single_quote)
-			process_double_quote(input, &ex);
+			process_double_quote(&ex);
 		else if (input[ex.i] == '$' && !ex.in_single_quote)
 			process_dollar(input, &ex);
 		else

@@ -6,11 +6,11 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 14:29:55 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 18:52:19 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:43:55 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expand.h"
+#include "../headers/lexer.h"
 
 int	ft_isspace(int c)
 {
@@ -31,7 +31,7 @@ char	*get_env_value(const char *name)
 	return (ft_strdup(value));
 }
 
-void	case_double_dollar(t_expand *ex)
+void	case_double_dollar(void)
 {
 	ft_putstr_fd(DOUBLE_DOLLARS, 2);
 	//renvoyer ce qu'il faut etc...

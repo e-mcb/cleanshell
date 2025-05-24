@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:30:41 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 13:43:44 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:02:16 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,16 @@ char	**ft_strdup_array(char **src)
 	}
 	dst[i] = NULL;
 	return (dst);
+}
+
+char	*strndup_custom(const char *s, size_t n)
+{
+	char	*res;
+
+	res = malloc(n + 1);
+	if (!res)
+		return (NULL);
+	ft_strncpy(res, s, n);
+	res[n] = '\0';
+	return (res);
 }

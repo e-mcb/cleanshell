@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:31:47 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 14:38:34 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:12:50 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define MAX_HEREDOC 16
 # define OPEN_QUOTES "Minishell does not support open quotes,\
 						please escape them properly\n"
+# define DOUBLE_DOLLARS "Minishell ne gere pas $$\n"
 
 typedef enum e_token_type
 {
@@ -76,6 +77,17 @@ typedef struct s_shell
 	char	**splitted;
 }	t_shell;
 
+typedef struct s_expand
+{
+	int		i;
+	int		j;
+	int		count;
+	int		start;
+	bool	in_single_quote;
+	bool	in_double_quote;
+	char	**result;
+}	t_expand;
+
 //booleans functions for split2
 bool	is_quote(char c);
 bool	is_closing_quote(char c, char opening_quote);
@@ -85,6 +97,9 @@ bool	handle_quotes(char c, bool *in_quotes, char *opening_quote);
 char	*ft_substrword(char *str, int start, int end);
 char	*trim_quotes(char *str);
 char	**ft_strdup_array(char **src);
+char	*ft_strncpy(char *dest, const char *src, unsigned int n);
+char	*strndup_custom(const char *s, size_t n);
+int		count_strings(char **arr);
 
 //parsing utils
 int		ft_has_invalid_quotes(const char *str);
@@ -107,5 +122,16 @@ void	free_list(t_token **head);
 void	ft_exit(char *input, t_shell *shell);
 
 char	*prompt(t_shell *shell);
+
+//expand
+void	expand(t_shell *shell);
+int		ft_count_segments(const char *input);
+char	**split_and_expand(const char *input);
+char	*join_chars(char **str);
+void	case_double_dollar(void);
+void	case_only_dollar(t_expand *ex);
+void	case_question_mark(t_expand *ex);
+void	case_env_var(t_expand *ex, const char *input);
+
 
 #endif

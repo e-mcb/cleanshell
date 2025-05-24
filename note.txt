@@ -1,3 +1,8 @@
 Expand: MAlloc a proteger
 Check sur les whitespace (Est-ce qu'a l'exec readline on peut remplacer les whitespaces par des espaces? sinon adapter le split)
 Goupiller l'appel de fonction et la gestion de la liste chainee
+
+
+Env -i : Recreation des variables necessaires a la bonne execution 
+(Passer sur Env et si une des variables est manquante, la recreer en dur)
+(SHLVL, PATH, _, ?)

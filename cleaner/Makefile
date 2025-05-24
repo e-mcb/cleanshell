@@ -6,6 +6,7 @@ LDFLAGS = -lreadline
 # Directories
 UTILS_DIR = utils
 TOKENIZER_DIR = tokenizer
+EXPAND_DIR = expand
 LIBFT_DIR = libft
 OBJ_DIR = objects
 
@@ -16,9 +17,15 @@ SRCS = main.c prompt.c \
 	$(UTILS_DIR)/linked_list_utils.c \
 	$(UTILS_DIR)/parsing_utils.c \
 	$(UTILS_DIR)/string_utils.c \
+	$(UTILS_DIR)/string_utils2.c \
 	$(TOKENIZER_DIR)/tokenizer.c \
 	$(TOKENIZER_DIR)/split2.c \
-	$(TOKENIZER_DIR)/refine_token.c
+	$(TOKENIZER_DIR)/refine_token.c \
+	$(EXPAND_DIR)/countsegments.c \
+	$(EXPAND_DIR)/expand_cases.c \
+	$(EXPAND_DIR)/expand.c \
+	$(EXPAND_DIR)/joinexpanded.c \
+	$(EXPAND_DIR)/splitandexpand.c \
 
 # Create list of object files in the objects/ dir
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)

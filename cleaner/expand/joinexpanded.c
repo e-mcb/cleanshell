@@ -6,11 +6,11 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 14:27:36 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 14:28:51 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/24 22:01:04 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expand.h"
+#include "../headers/lexer.h"
 
 int	array_len(char **str)
 {
@@ -53,5 +53,5 @@ char	*join_chars(char **str)
 		i++;
 	}
 	expanded[k] = '\0';
-	return (expanded);
+	return (ft_free_str_array(str), expanded);
 }

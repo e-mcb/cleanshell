@@ -16,7 +16,7 @@ void	ft_parsing(char *input, t_shell *shell)
 	}
 	ft_free_str_array(shell->splitted); //no longer need that once the tokens have been created
 	refine_token_type(shell->token);
-	//expand here
+	expand(shell);
 	//refine for cmds and args
 	shell->splitted = NULL;
 }
@@ -39,6 +39,7 @@ int main(int argc, char **argv, char **envp)
 {
 	char *input;
 	t_shell *shell;
+	t_token	*tmp;
 
 	(void)argc;
 	(void)argv;
@@ -54,6 +55,12 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		ft_parsing(input, shell); //splits the input gotten from readline then creates token in order to make the execution easier
 		// Exec around here
+		tmp = shell->token;
+		while (tmp)
+		{
+			printf("Token: %s   token type: %d\n", tmp->value, tmp->type);
+			tmp = tmp->next;
+		}
 		free_list(&(shell->token));//frees the list of token in order to get ready for the next input
 	}
 	return (0);
