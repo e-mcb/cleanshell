@@ -30,6 +30,7 @@ t_shell	*init_shell(t_shell *shell, char **envp)
 	shell->splitted = NULL; // array gotten from splitting the input
 	shell->token = NULL; // list of token created from the input
 	shell->env = ft_strdup_array(envp);
+	shell->exit_status = 0;
 	if (shell->env == NULL)
 		ft_exit(NULL, shell);
 	return (shell);

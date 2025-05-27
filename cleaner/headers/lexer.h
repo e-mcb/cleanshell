@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:31:47 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/24 20:12:50 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/27 22:53:21 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_shell
 	char	**env;
 	t_token	*token;
 	char	**splitted;
+	int		exit_status;
 }	t_shell;
 
 typedef struct s_expand
@@ -92,6 +93,7 @@ typedef struct s_expand
 bool	is_quote(char c);
 bool	is_closing_quote(char c, char opening_quote);
 bool	handle_quotes(char c, bool *in_quotes, char *opening_quote);
+bool	is_whitespace(char c);
 
 //string_utils functions
 char	*ft_substrword(char *str, int start, int end);
@@ -100,6 +102,10 @@ char	**ft_strdup_array(char **src);
 char	*ft_strncpy(char *dest, const char *src, unsigned int n);
 char	*strndup_custom(const char *s, size_t n);
 int		count_strings(char **arr);
+void	ft_init_var(size_t *i, size_t *count, bool *in_quotes, char *c);
+
+//misc utils
+void	*ft_realloc(void *ptr, int old_size, int new_size);
 
 //parsing utils
 int		ft_has_invalid_quotes(const char *str);
@@ -133,5 +139,7 @@ void	case_only_dollar(t_expand *ex);
 void	case_question_mark(t_expand *ex);
 void	case_env_var(t_expand *ex, const char *input);
 
+//tmp
+char	**split_keep_separators(const char *s, bool (*is_sep)(char));
 
 #endif

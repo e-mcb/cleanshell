@@ -2,7 +2,7 @@
 
 // int main(void)
 // {
-// 	char *input = "Salut_$USER$SHLVL$USER";
+// 	char *input = "Salut_$USER,$SHLVL$USER";
 // 	char **parsed = split_and_expand(input);
 // 	char	*expended = join_chars(parsed);
 
@@ -26,35 +26,13 @@ t_token	*new_token_append(t_token *head, char *str, t_token_type type)
 	if (!new_node)
 		return (NULL);
 	new_node->type = type;
-
 	if (!head)
 		return new_node;
-
 	last = head;
 	while (last->next)
 		last = last->next;
 	last->next = new_node;
-	return head;
-}
-
-void	insert_new_nodes(t_token *token, char **splitted)
-{
-	int	i;
-	t_token	*tmp;
-	
-	i = 1;
-	tmp = token;
-	token->next = NULL;
-	ft_strlcpy(token->value, splitted[0], ft_strlen(splitted[0]));
-	while (splitted[i])
-	{
-		if(new_token_append(token, splitted[i], tmp->type))
-			//malloc error
-		i++;
-	}
-	while (token->next != NULL)
-		token = token->next;
-	token->next = tmp->next;
+	return (head);
 }
 
 void	replace_token_with_nodes(t_shell *shell, t_token *prev, t_token *current, char **splitted)
@@ -94,6 +72,22 @@ void	replace_token_with_nodes(t_shell *shell, t_token *prev, t_token *current, c
 	free(current);
 }
 
+void	ft_print_array(char **str)
+{
+	int	i;
+
+	if (!str)
+		return ;
+	i = 0;
+	while (str[i])
+	{
+		printf("%s\n", str[i]);
+		i++;
+	}
+	return ;
+}
+
+
 void	expand(t_shell *shell)
 {
 	t_token	*tmp;
@@ -108,9 +102,11 @@ void	expand(t_shell *shell)
 		if (ft_strchr(tmp->value, '$'))
 		{
 			printf("Before expansion: %s\n", tmp->value);
+			// ft_print_array(split_and_expand(tmp->value));
 			expanded = join_chars(split_and_expand(tmp->value));
 			printf("After expansion: %s\n", expanded);
-			splitted = ft_split2(expanded, ' ');
+			splitted = split_keep_separators(expanded, is_whitespace);
+			ft_print_array(splitted);
 			if (tmp->type == FILEN && count_strings(splitted) > 1)
 			{
 				fprintf(stderr, "Ambiguous redirect: %s\n", expanded);
@@ -132,11 +128,63 @@ void	expand(t_shell *shell)
 	}
 }
 
-// char *expand (t_shell *shell)
+// void *ft_realloc_array(void *ptr, size_t old_count, size_t new_count, size_t elem_size)
 // {
-// 	t_token	tmp;
-
-
+//     void *new_ptr = malloc(new_count * elem_size);
+//     if (!new_ptr)
+//         return (NULL);
+//     if (ptr)
+//     {
+//         ft_memcpy(new_ptr, ptr, old_count * elem_size);
+//         free(ptr);
+//     }
+//     return (new_ptr);
 // }
 
-// token->value = join_chars(split_and_expand(token->value))
+
+char **split_keep_separators(const char *s, bool (*is_sep)(char))
+{
+    char    **res;
+    size_t  i;
+    size_t  start;
+    size_t  count;
+    size_t  capacity;
+    char    *chunk;
+
+	i = 0;
+	start = 0;
+	count = 0;
+	capacity = 4;
+    res = malloc(sizeof(char *) * capacity);
+    if (!res)
+        return (NULL);
+    while (s[i])
+    {
+        while (s[i] && is_sep(s[i]))
+            i++;
+        while (s[i] && !is_sep(s[i]))
+            i++;
+        while (s[i] && is_sep(s[i]))
+            i++;
+        chunk = ft_substr(s, start, i - start);
+        if (!chunk)
+            return (NULL);
+        if (count + 1 >= capacity)
+        {
+            capacity *= 2;
+            char **new_res = malloc(sizeof(char *) * capacity);
+            if (!new_res)
+                return NULL;
+            ft_memcpy(new_res, res, sizeof(char *) * count);
+            free(res);
+            res = new_res;
+        }
+        res[count++] = chunk;
+        start = i;
+    }
+    if (res)
+        res[count] = NULL;
+    return (res);
+}
+
+

@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:31:02 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/18 13:43:56 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/26 19:47:17 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	**ft_malloc_error(char **tab)
 	return (NULL);
 }
 
-static void	ft_init_var(size_t *i, size_t *count, bool *in_quotes, char *c)
+void	ft_init_var(size_t *i, size_t *count, bool *in_quotes, char *c)
 {
 	*i = 0;
 	*count = 0;

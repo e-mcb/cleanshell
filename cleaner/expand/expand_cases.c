@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 14:29:55 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/24 20:43:55 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/25 14:25:35 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env_value(const char *name)
 
 	value = getenv(name);
 	if (!value)
-		return (ft_strdup(""));
+		return (ft_strdup(" "));
 	return (ft_strdup(value));
 }
 
