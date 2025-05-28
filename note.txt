@@ -6,3 +6,17 @@ Goupiller l'appel de fonction et la gestion de la liste chainee
 Env -i : Recreation des variables necessaires a la bonne execution 
 (Passer sur Env et si une des variables est manquante, la recreer en dur)
 (SHLVL, PATH, _, ?)
+
+Exec : Loop pour les redir, creer un arr pendant la loop et lorsque l'on trouve un pipe,
+on appelle execve + continue la Loop
+
+Expand = plutot que de split sur les espaces (sep)
+On passe les caracteres puis switch whitespace et lorsque switch off on cree un nouveau mot
+
+? est une variable a ajouter au shell
+check la valeur que ca prend dans le  cas d4une erreur de parsing ou de sybbtaxe
+trim a faire sur la new linked liste
+
+Epluchage des mallocs + message d'erreur
+
+Expand a revoir  (caracteres speciaux qui stoppent la recherche dans l'env)

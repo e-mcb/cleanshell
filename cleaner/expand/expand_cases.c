@@ -6,7 +6,7 @@
 /*   By: mzutter <mzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 14:29:55 by mzutter           #+#    #+#             */
-/*   Updated: 2025/05/25 14:25:35 by mzutter          ###   ########.fr       */
+/*   Updated: 2025/05/29 00:37:38 by mzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env_value(const char *name)
 
 	value = getenv(name);
 	if (!value)
-		return (ft_strdup(" "));
+		return (ft_strdup(""));
 	return (ft_strdup(value));
 }
 
@@ -70,7 +70,8 @@ void	case_env_var(t_expand *ex, const char *input)
 	ex->i++;
 	ex->start = ex->i;
 	while (input[ex->i] && !ft_isspace(input[ex->i])
-		&& input[ex->i] != '"' && input[ex->i] != '\'' && input[ex->i] != '$')
+		&& input[ex->i] != '"' && input[ex->i] != '\'' && input[ex->i] != '$' &&
+		(ft_isalnum(input[ex->i]) || input[ex->i] == '_'))
 		ex->i++;
 	varname = strndup_custom(input + ex->start, ex->i - ex->start);
 	value = get_env_value(varname);

@@ -1,22 +1,5 @@
 #include "../headers/lexer.h"
 
-// int main(void)
-// {
-// 	char *input = "Salut_$USER,$SHLVL$USER";
-// 	char **parsed = split_and_expand(input);
-// 	char	*expended = join_chars(parsed);
-
-// 	for (int i = 0; parsed[i]; i++)
-// 		printf("'%s'\n", parsed[i]);
-
-// 	for (int i = 0; parsed[i]; i++)
-// 		free(parsed[i]);
-// 	printf("la chaine finale: %s\n", expended);
-// 	free(parsed);
-// 	free(expended);
-// 	return 0;
-// }
-
 t_token	*new_token_append(t_token *head, char *str, t_token_type type)
 {
 	t_token *new_node;
@@ -27,7 +10,7 @@ t_token	*new_token_append(t_token *head, char *str, t_token_type type)
 		return (NULL);
 	new_node->type = type;
 	if (!head)
-		return new_node;
+		return (new_node);
 	last = head;
 	while (last->next)
 		last = last->next;
@@ -35,41 +18,43 @@ t_token	*new_token_append(t_token *head, char *str, t_token_type type)
 	return (head);
 }
 
-void	replace_token_with_nodes(t_shell *shell, t_token *prev, t_token *current, char **splitted)
+t_token *insert_new_nodes(t_shell *shell, t_token *prev, t_token *current, char **splitted)
 {
-	t_token	*new_head;
-	t_token	*new_tail;
+	int	i;
 	t_token	*new_node;
-	int		i;
+	t_token	*last;
+	t_token	*first;
 
 	i = 0;
-	new_head = NULL;
-	new_tail = NULL;
+	last = NULL;
+	first = NULL;
 	while (splitted[i])
 	{
-		new_node = new_token_append(NULL, splitted[i], current->type); // your helper
+		new_node = new_token_append(first, splitted[i], current->type);
 		if (!new_node)
 		{
-			return;
-			//malloc error
+			free_list(&first);
+			return (NULL);
 		}
-		if (!new_head)
-			new_head = new_tail = new_node;
+		if (!first)
+			first = last = new_node;
 		else
 		{
-			new_tail->next = new_node;
-			new_tail = new_node;
+			last->next = new_node;
+			last = new_node;
 		}
 		i++;
-	}	
-	if (new_tail)
-		new_tail->next = current->next;
+	}
+	if (first)
+		first->next = current->next;
 	if (prev)
-		prev->next = new_head;
+		prev->next = first;
 	else
-		shell->token = new_head;
+		shell->token = first;
 	free(current->value);
 	free(current);
+	return (last);
+
 }
 
 void	ft_print_array(char **str)
@@ -97,6 +82,8 @@ void	expand(t_shell *shell)
 
 	prev = NULL;
 	tmp = shell->token;
+	expanded = NULL;
+	splitted = NULL;
 	while (tmp)
 	{
 		if (ft_strchr(tmp->value, '$'))
@@ -104,23 +91,38 @@ void	expand(t_shell *shell)
 			printf("Before expansion: %s\n", tmp->value);
 			// ft_print_array(split_and_expand(tmp->value));
 			expanded = join_chars(split_and_expand(tmp->value));
+			
 			printf("After expansion: %s\n", expanded);
-			splitted = split_keep_separators(expanded, is_whitespace);
-			ft_print_array(splitted);
-			if (tmp->type == FILEN && count_strings(splitted) > 1)
+			if (expanded && expanded[0] != 0)
 			{
-				fprintf(stderr, "Ambiguous redirect: %s\n", expanded);
-				ft_free_str_array(splitted);
-				free(expanded);
-				return;
+				splitted = split_keep_separators(expanded, is_whitespace);
+				ft_print_array(splitted);
+				if (tmp->type == FILEN && count_strings(splitted) > 1)
+				{
+					fprintf(stderr, "Ambiguous redirect: %s\n", expanded);
+					ft_free_str_array(splitted);
+					free(expanded);
+					return;
+				}
+				tmp = insert_new_nodes(shell, prev, tmp, splitted);
+				if (ft_strchr(tmp->value, '$'))
+				{
+					prev = tmp;
+					tmp = tmp->next;
+				}
 			}
-			replace_token_with_nodes(shell, prev, tmp, splitted);
-			if (prev != NULL)
-				tmp = prev->next;
 			else
-				tmp = shell->token;
-			ft_free_str_array(splitted);
-			free(expanded);
+				tmp->value[0] = 0;
+			if (splitted)
+			{
+				ft_free_str_array(splitted);
+				splitted = NULL;
+			}
+			if (expanded)
+			{
+				free(expanded);
+				expanded = NULL;
+			}
 			continue;
 		}
 		prev = tmp;
